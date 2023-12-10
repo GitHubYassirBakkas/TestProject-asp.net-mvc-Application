@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="etudiant">
+          <Key>
+            <PropertyRef Name="id_etudiant" />
+          </Key>
+          <Property Name="id_etudiant" Type="int" Nullable="false" />
+          <Property Name="nom_etudiant" Type="varchar" MaxLength="50" />
+          <Property Name="id_filiere" Type="int" />
+        </EntityType>
+        <EntityType Name="filiere">
+          <Key>
+            <PropertyRef Name="id_filiere" />
+          </Key>
+          <Property Name="id_filiere" Type="int" Nullable="false" />
+          <Property Name="nom_filiere" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__etudiant__id_fil__398D8EEE">
+          <End Role="filiere" Type="Self.filiere" Multiplicity="0..1" />
+          <End Role="etudiant" Type="Self.etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="filiere">
+              <PropertyRef Name="id_filiere" />
+            </Principal>
+            <Dependent Role="etudiant">
+              <PropertyRef Name="id_filiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="etudiant" EntityType="Self.etudiant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="filiere" EntityType="Self.filiere" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__etudiant__id_fil__398D8EEE" Association="Self.FK__etudiant__id_fil__398D8EEE">
+            <End Role="filiere" EntitySet="filiere" />
+            <End Role="etudiant" EntitySet="etudiant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="etudiant">
+          <Key>
+            <PropertyRef Name="id_etudiant" />
+          </Key>
+          <Property Name="id_etudiant" Type="Int32" Nullable="false" />
+          <Property Name="nom_etudiant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_filiere" Type="Int32" />
+          <NavigationProperty Name="filiere" Relationship="Self.FK__etudiant__id_fil__398D8EEE" FromRole="etudiant" ToRole="filiere" />
+        </EntityType>
+        <EntityType Name="filiere">
+          <Key>
+            <PropertyRef Name="id_filiere" />
+          </Key>
+          <Property Name="id_filiere" Type="Int32" Nullable="false" />
+          <Property Name="nom_filiere" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="etudiants" Relationship="Self.FK__etudiant__id_fil__398D8EEE" FromRole="filiere" ToRole="etudiant" />
+        </EntityType>
+        <Association Name="FK__etudiant__id_fil__398D8EEE">
+          <End Role="filiere" Type="Self.filiere" Multiplicity="0..1" />
+          <End Role="etudiant" Type="Self.etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="filiere">
+              <PropertyRef Name="id_filiere" />
+            </Principal>
+            <Dependent Role="etudiant">
+              <PropertyRef Name="id_filiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UNIVERSITY_YASSIREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="etudiants" EntityType="Self.etudiant" />
+          <EntitySet Name="filieres" EntityType="Self.filiere" />
+          <AssociationSet Name="FK__etudiant__id_fil__398D8EEE" Association="Self.FK__etudiant__id_fil__398D8EEE">
+            <End Role="filiere" EntitySet="filieres" />
+            <End Role="etudiant" EntitySet="etudiants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="UNIVERSITY_YASSIREntities">
+          <EntitySetMapping Name="etudiants">
+            <EntityTypeMapping TypeName="Model.etudiant">
+              <MappingFragment StoreEntitySet="etudiant">
+                <ScalarProperty Name="id_etudiant" ColumnName="id_etudiant" />
+                <ScalarProperty Name="nom_etudiant" ColumnName="nom_etudiant" />
+                <ScalarProperty Name="id_filiere" ColumnName="id_filiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="filieres">
+            <EntityTypeMapping TypeName="Model.filiere">
+              <MappingFragment StoreEntitySet="filiere">
+                <ScalarProperty Name="id_filiere" ColumnName="id_filiere" />
+                <ScalarProperty Name="nom_filiere" ColumnName="nom_filiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
